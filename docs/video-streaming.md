@@ -3,6 +3,7 @@
 A secure video streaming application with AWS CloudFront CDN, Node.js backend, and Vue.js frontend.
 
 ## 📐 Architecture Overview
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/4b9028f9-2af4-49ff-b38f-f72f0d8c1c07" />
 
 ```
 Browser (HTTPS)
