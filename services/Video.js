@@ -47,10 +47,10 @@ module.exports = ({ Services, config }) => {
     };
 
     return {
-        signCookiesForVideoUrl: (videoUrl, expiresInSeconds = 7200) => {
+        signCookiesForVideoUrl: ({ filePath }, expiresInSeconds = 7200) => {
             validateCdnConfig();
 
-            const resourcePrefix = getResourcePrefix(videoUrl);
+            const resourcePrefix = `${config.s3cdn.domain}/${filePath}`;
             const policy = buildPolicy(resourcePrefix, expiresInSeconds);
 
             const cookies = getSignedCookies({
@@ -63,7 +63,7 @@ module.exports = ({ Services, config }) => {
         },
 
 
-                buildWatchHtml: ({ proxyUrl, refreshUrl }) => {
+        buildWatchHtml: ({ proxyUrl, refreshUrl, filePath }) => {
             return `
 <!DOCTYPE html>
 <html>
@@ -80,11 +80,12 @@ module.exports = ({ Services, config }) => {
   <script>
     const videoUrl = "${proxyUrl}";
         const refreshUrl = "${refreshUrl}";
+        const filePath = "${filePath}";
     const video = document.getElementById('video');
 
         (async () => {
             try {
-                await fetch(refreshUrl, { credentials: 'include' });
+                await fetch(refreshUrl + "?filePath=" + encodeURIComponent(filePath), { credentials: 'include' });
 
                 if (Hls.isSupported()) {
                     const hls = new Hls({

@@ -29,13 +29,8 @@ module.exports.routes = function ({ Services, config }) {
         "GET /refresh-cookies": {
             handler: async (req, res) => {
                 try {
-                    const { videoUrl } = req.query;
 
-                    if (!videoUrl) {
-                        return res.status(400).send('videoUrl query param is required');
-                    }
-
-                    const { cookies } = Services.Video.signCookiesForVideoUrl(videoUrl);
+                    const { cookies } = Services.Video.signCookiesForVideoUrl(req.query);
 
                     res.cookie('CloudFront-Key-Pair-Id', cookies['CloudFront-Key-Pair-Id'], {
                         httpOnly: true,
