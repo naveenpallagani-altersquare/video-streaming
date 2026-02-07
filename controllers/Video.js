@@ -40,19 +40,19 @@ module.exports.routes = function ({ Services, config }) {
 
                     res.cookie('CloudFront-Key-Pair-Id', cookies['CloudFront-Key-Pair-Id'], {
                         httpOnly: true,
-                        secure: false, // MUST be true in HTTPS
+                        secure: true, // MUST be true in HTTPS
                         sameSite: 'none'
                     });
 
                     res.cookie('CloudFront-Policy', cookies['CloudFront-Policy'], {
                         httpOnly: true,
-                        secure: false,
+                        secure: true, // MUST be true in HTTPS
                         sameSite: 'none'
                     });
 
                     res.cookie('CloudFront-Signature', cookies['CloudFront-Signature'], {
                         httpOnly: true,
-                        secure: false,
+                        secure: true, // MUST be true in HTTPS
                         sameSite: 'none'
                     });
 
