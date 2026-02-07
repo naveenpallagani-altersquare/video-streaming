@@ -6,7 +6,7 @@
 module.exports = {
     // CloudFront distribution URL (without protocol)
     s3cdn: {
-        domain: process.env.CLOUDFRONT_URL || 'dxxxx.cloudfront.net',
+        domain: process.env.CDN_BASE_URL || 'dxxxx.cloudfront.net',
         cdnKeyPairId: process.env.CDN_KEY_PAIR_ID,
         cdnPrivateKey: process.env.CDN_PRIVATE_KEY ? process.env.CDN_PRIVATE_KEY.replace(/\\\n/g, '\n') : null
     }
