@@ -49,8 +49,14 @@ module.exports = ({ Services, config }) => {
     return {
         signCookiesForVideoUrl: ({ filePath }, expiresInSeconds = 7200) => {
             validateCdnConfig();
-
+            if (!filePath) {
+                return {
+                    success: false,
+                    message: 'filePath is required to sign cookies'
+                };
+            }
             const resourcePrefix = `${config.s3cdn.domain}/${filePath}`;
+            console.log('Signing cookies for resource prefix:', resourcePrefix);
             const policy = buildPolicy(resourcePrefix, expiresInSeconds);
 
             const cookies = getSignedCookies({
@@ -59,7 +65,7 @@ module.exports = ({ Services, config }) => {
                 keyPairId: config.s3cdn.cdnKeyPairId
             });
 
-            return { resourcePrefix, policy, cookies };
+            return { success: true, data: { cookies } };
         },
 
 

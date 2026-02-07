@@ -30,7 +30,13 @@ module.exports.routes = function ({ Services, config }) {
             handler: async (req, res) => {
                 try {
 
-                    const { cookies } = Services.Video.signCookiesForVideoUrl(req.query);
+                    const { success, data, message } = Services.Video.signCookiesForVideoUrl(req.query);
+
+                    if (!success) {
+                        return res.status(400).json({ success: false, message });
+                    }
+
+                    const { cookies } = data;
 
                     res.cookie('CloudFront-Key-Pair-Id', cookies['CloudFront-Key-Pair-Id'], {
                         httpOnly: true,
