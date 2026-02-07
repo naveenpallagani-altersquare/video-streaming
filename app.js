@@ -1,6 +1,21 @@
 const express = require("express");
 const fs = require("fs");
 const app = express();
+
+// Add CORS handling for OPTIONS requests FIRST
+const cors = require("cors");
+const corsOptions = {
+	origin: true,
+	credentials: true,
+	methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
+	allowedHeaders: ["*"],
+	exposedHeaders: ["*"],
+	preflightContinue: false,
+	optionsSuccessStatus: 204
+};
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 const { logger, fatalError } = require("./utils");
 
 // Root directory path

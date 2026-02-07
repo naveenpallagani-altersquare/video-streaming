@@ -7,7 +7,16 @@ let compression = require("compression");
 let cors = require("cors");
 let cookieParser = require("cookie-parser");
 
-/* Allow all origins for now */
-let corsMiddle = cors();
+/* Allow all origins with full configuration */
+let corsMiddle = cors({
+	origin: true, // Allow all origins
+	credentials: true, // Allow cookies
+	methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
+	allowedHeaders: ["*"],
+	exposedHeaders: ["*"],
+	preflightContinue: false,
+	optionsSuccessStatus: 204
+});
 
-module.exports = [bodyParser, compression(), corsMiddle, cookieParser()];
+// CORS must come FIRST before body parser
+module.exports = [corsMiddle, bodyParser, compression(), cookieParser()];
