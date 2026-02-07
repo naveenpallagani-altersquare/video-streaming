@@ -1,41 +1,6 @@
 const express = require("express");
 const fs = require("fs");
 const app = express();
-
-// Add CORS handling for OPTIONS requests FIRST
-const cors = require("cors");
-const corsOptions = {
-	origin: function (origin, callback) {
-		// Allow requests with no origin (like mobile apps, Postman, curl)
-		if (!origin) return callback(null, true);
-		
-		// List of allowed origins - add all your frontend URLs here
-		const allowedOrigins = [
-			'http://localhost:3000',
-			'http://127.0.0.1:3000',
-			'http://localhost:5173',
-			'https://d1p4dwrl3opcrn.cloudfront.net',
-			'http://3.131.36.1'
-		];
-		
-		if (allowedOrigins.includes(origin)) {
-			callback(null, true);
-		} else {
-			// Log blocked origins to help debug
-			console.log('⚠️ Blocked CORS origin:', origin);
-			callback(null, true); // Temporarily allow all for debugging
-		}
-	},
-	credentials: true, // REQUIRED for cookies with withCredentials: true
-	methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
-	allowedHeaders: ["*"],
-	exposedHeaders: ["Set-Cookie", "Cookie", "*"],
-	preflightContinue: false,
-	optionsSuccessStatus: 204
-};
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
-
 const { logger, fatalError } = require("./utils");
 
 // Root directory path
@@ -188,7 +153,7 @@ const load = async function () {
 				subRouteConfig.handler
 			);
 
-			logger.info(`Added | \t ${methodName.toUpperCase()}  /api/${baseRoute}${subRouteName}`);
+			logger.info(`Added | \t ${methodName.toUpperCase()}  /${baseRoute}${subRouteName}`);
 			logger.info("_______________________________________________________");
 		}
 
@@ -201,13 +166,13 @@ const load = async function () {
 				}
 				// inject Services and config as a dependency to middleware
 				app.use(
-					"/api/" + baseRoute,
+					"/" + baseRoute,
 					utils.injectDependencyArgument(Middlewares[middlewareName], { Services, config: config })
 				);
 			});
 
 		// attach router to the baseRoute through app
-		app.use("/api/" + baseRoute, expressRouter);
+		app.use("/" + baseRoute, expressRouter);
 	});
 };
 
