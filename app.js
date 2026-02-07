@@ -153,7 +153,7 @@ const load = async function () {
 				subRouteConfig.handler
 			);
 
-			logger.info(`Added | \t ${methodName.toUpperCase()}  /${baseRoute}${subRouteName}`);
+			logger.info(`Added | \t ${methodName.toUpperCase()}  /api/${baseRoute}${subRouteName}`);
 			logger.info("_______________________________________________________");
 		}
 
@@ -166,13 +166,13 @@ const load = async function () {
 				}
 				// inject Services and config as a dependency to middleware
 				app.use(
-					"/" + baseRoute,
+					"/api/" + baseRoute,
 					utils.injectDependencyArgument(Middlewares[middlewareName], { Services, config: config })
 				);
 			});
 
 		// attach router to the baseRoute through app
-		app.use("/" + baseRoute, expressRouter);
+		app.use("/api/" + baseRoute, expressRouter);
 	});
 };
 
