@@ -7,7 +7,7 @@ let compression = require("compression");
 let cors = require("cors");
 let cookieParser = require("cookie-parser");
 /* This whitelist can only filter requests from the browser clients */
-var whitelist = ["http://localhost:3000"];
+var whitelist = ["http://localhost:3000", "http://localhost:5173"];
 
 var corsOptions = {
 	origin: function (origin, callback) {
