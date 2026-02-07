@@ -16,11 +16,6 @@ var whitelist = [
 
 var corsOptions = {
 	origin: function (origin, callback) {
-		console.log("========================================");
-		console.log("🔍 CORS Request Received");
-		console.log("Origin:", origin || "NO ORIGIN (server-to-server or same-origin)");
-		console.log("Whitelist:", whitelist);
-		console.log("========================================");
 		
 		if (!origin) {
 			console.log("✅ Allowed: No origin header (same-origin or non-browser request)");

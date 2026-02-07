@@ -8,6 +8,7 @@ module.exports = {
     s3cdn: {
         domain: process.env.CDN_BASE_URL || 'dxxxx.cloudfront.net',
         cdnKeyPairId: process.env.CDN_KEY_PAIR_ID,
-        cdnPrivateKey: process.env.CDN_PRIVATE_KEY ? process.env.CDN_PRIVATE_KEY.replace(/\\\n/g, '\n') : null
+        cdnPrivateKey: process.env.CDN_PRIVATE_KEY ? process.env.CDN_PRIVATE_KEY.replace(/\\\n/g, '\n') : null,
+        cdnCookieExpirationSeconds: parseInt(process.env.CDN_COOKIE_EXPIRATION_SECONDS, 10) || 7200
     }
 };
