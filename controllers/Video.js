@@ -1,3 +1,5 @@
+const e = require("express");
+
 module.exports.routes = function ({ Services, config }) {
     return {
         "GET /refresh-cookies": {
@@ -15,18 +17,21 @@ module.exports.routes = function ({ Services, config }) {
                     res.cookie('CloudFront-Key-Pair-Id', cookies['CloudFront-Key-Pair-Id'], {
                         httpOnly: true,
                         secure: true, // MUST be true in HTTPS
+                        expires: new Date(Date.now() + config.s3cdn.cdnCookieExpirationSeconds),
                         sameSite: 'none'
                     });
 
                     res.cookie('CloudFront-Policy', cookies['CloudFront-Policy'], {
                         httpOnly: true,
                         secure: true, // MUST be true in HTTPS
+                        expires: new Date(Date.now() + config.s3cdn.cdnCookieExpirationSeconds),
                         sameSite: 'none'
                     });
 
                     res.cookie('CloudFront-Signature', cookies['CloudFront-Signature'], {
                         httpOnly: true,
                         secure: true, // MUST be true in HTTPS
+                        expires: new Date(Date.now() + config.s3cdn.cdnCookieExpirationSeconds),
                         sameSite: 'none'
                     });
 
